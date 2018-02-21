@@ -1,0 +1,12 @@
+<% include headerAdmin.ejs %>
+
+<div class="edit">
+	<form method="post" action = "/admin/editaccount/save">
+		<div class="autherror"><% if(emailtaken){%>Email already taken<br>try again<br> <% } %></div> 
+		<input type="email" placeholder="enter your email" name="email"><br>
+		<input type="password" placeholder="enter a password" name="password"><br>
+		<input type="submit" value="Save" name = btnsave>
+	</form>
+</div>
+
+<% include footerPages.ejs %>

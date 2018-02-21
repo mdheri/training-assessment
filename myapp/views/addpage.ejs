@@ -1,0 +1,43 @@
+<h3>Add a Page</h3>
+
+<form>
+	<input type="text" placeholder="title" id="title" name = "title" required><br>
+	<textarea placeholder="content" id="content" name = "content" required></textarea><br>
+	<div class="autherror"><% if(urltaken){%>URL already taken try again<br> <% } %></div> 
+	<input type="text" placeholder="please enter a url" id="url" name = "url" required><br>
+</form>
+<button class = "post btn-save">Save</button>
+
+<button class = "post btn-cancel">Cancel</button>
+
+<script>
+	$(function(){
+
+		$('.btn-save').on('click',function(event){
+			var thistitle = document.getElementById('title').value;
+			var thiscontent = document.getElementById('content').value;
+			var url = document.getElementById('url').value;
+			$.ajax({
+				method: 'POST',
+				url: '/admin/addpage/'+ thistitle + '/' + thiscontent + '/' + url,
+			}).done(function(response){
+				$('#add-page').hide();
+				$('.table-main').append("<tr><td><a href ='" + url + "'> "+ thistitle + " </a></td><td> "+ Date() + 
+					"</td><td id = options> <img src='/images/delete.png' alt='delete' class = 'delete btn-delete' width='20' height='20' >" +
+					"<form>	<input type = 'image' src='/images/edit.png' alt='editpage' width='20' height='20' ></form>" + 
+					"<img src='/images/visability.png' width='20' height='20'></td></tr>");
+			});
+		})
+
+		$('.btn-cancel').on('click',function(event){
+			$('#add-page').hide();
+		});
+
+		$('.btn-add').on('click',function(event){
+			$('#add-page').show();
+		})
+	});
+</script>
+
+
+

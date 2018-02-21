@@ -1,0 +1,134 @@
+<% include headerAdmin.ejs %>
+
+<div class="dashboardheader">
+   	<h1>Table of Pages</h1>
+</div>
+	
+<div class="btnaddpage">
+	<button class = "post btn-add">Add Page</button>
+</div>
+
+
+<div class = "table">
+	<table id = main class = "table-main">
+	<tr>
+		<th>title</th>
+		<th>updated</th>
+		<th>options</th>
+	</tr>
+
+	<% for(var i=0; i<Object.keys(page).length; i++) {%>
+
+	<tr>
+		<td><a href = "<%= page[i].url%>" ><%= page[i].title %></a></td>
+		<td><%= page[i].date %></td>
+		<td id = options>
+			<img src="/images/delete.png" alt="delete" class = "delete btn-delete" width="20" height="20" data-page-id = "<%=page[i]._id%>" >
+			<img <% if(page[i].visable){ %> src="/images/visability.png" <% }else{ %> src="/images/invisable.png" <% } %>alt="visiblity"class = "post btn-visable" width="20" height="20" data-page-id = "<%=page[i]._id%>">
+		</td>
+	</tr>
+
+	<%}%>
+
+	</table>
+<br><br>
+
+</div>
+
+<div id = "modal">
+
+	<div id="add-page">
+		<div id = 'add-page-btn-title'>
+			<h3>Add a Page</h3>
+		</div>
+		<div id = 'add-page-btn-X'>
+				<button class = 'btn-cancel'>X</button>
+			</div>
+		<form>
+			title: <br>
+			<input type="text" placeholder="title" id="title" name = "title" required><br>
+			content: <br>
+			<textarea id = "pagecontent"></textarea>
+			url: <br>
+			<input type="text" placeholder="please enter a url" id="url" name = "url" required><br><br>
+		</form>
+		
+		<button class = "btn-save">Save</button>
+		<button class = "btn-cancel">Cancel</button>
+	</div>
+
+	<div id="modal-background">	
+	</div>
+
+</div>
+
+<% include footerPages.ejs %>
+
+<script>
+	$(function(){
+		var modalcontainer = $('modal');
+		$('.table-main').on('click','.btn-delete',function(event){
+			var button = $(this);
+			var pageId = $(this).attr("data-page-id");
+			$.ajax({
+				method: 'DELETE',
+				url: '/admin/page/'+ pageId
+			}).done(function(response){
+				button.parent().parent().remove();
+			});
+		});
+
+		$('.table-main').on('click','.btn-visable',function(event){
+			var button = $(this);
+			var pageId = $(this).attr("data-page-id");
+			$.ajax({
+				method: 'POST',
+				url: '/admin/page/'+ pageId
+			}).done(function(response){
+				button.hide();
+				if(button.attr('src') ==  "/images/visability.png")
+				{
+				button.attr('src', "/images/invisable.png")
+				}else{
+				button.attr('src', "/images/visability.png")
+				}
+				button.show(); 
+
+			});
+		});
+
+
+		$('.btn-save').on('click',function(event){
+			var thistitle = document.getElementById('title').value;
+			var thiscontent = tinymce.get("pagecontent").getContent();
+			var url = document.getElementById('url').value;
+			console.log(thiscontent);
+			$.ajax({
+				method: 'POST',
+				url: '/admin/addpage/' + url,
+				data: {content: thiscontent, title: thistitle}
+			}).done(function(response){
+				$('#modal').hide();
+				$('.table-main').append("<tr><td><a href ='" + url + "'> "+ thistitle + " </a></td><td> "+ Date() + "</td> "+ "<td id = options> " + 
+					"<img src='/images/delete.png' alt='delete' class = 'delete btn-delete' width='20' height='20' data-page-id = '" + response._id + "'> \n " +
+					"<img <% if(" + response.visable + "){ %> src='/images/visability.png' <% }else{ %> src='/images/invisable.png' <% } %>alt='visiblity' class = 'post btn-visable' width='20' height='20' data-page-id = '" + response._id + "'>" + 
+					"</td> </tr>");
+				});
+		})
+
+		$('#modal').on('click','#modal-background',function(event){
+			$('#modal').hide();
+		});
+
+		$('.btn-cancel').on('click',function(event){
+			$('#modal').hide();
+		});
+
+		$('.btn-add').on('click',function(event){
+			$('#modal').show();
+		})
+	
+		
+		
+	});
+</script> 

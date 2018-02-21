@@ -1,0 +1,37 @@
+
+<div class="body">
+    <% include header.ejs %>
+
+    <div class="header">
+        <h1>List Of Users</h1>
+    </div>
+    
+    <div class="body">
+        <div class="scrollmenu">
+            <% for(var i=0; i<Object.keys(users).length; i++) {%>
+                <%if(String(selfid) != String(users[i]._id) && !(following.includes(String(users[i]._id)))  ){ %>
+                    <a data-user-id = <%=users[i]._id%> ><%=users[i].username%></a>
+                <% } %>
+                <%if(String(selfid) == String(users[i]._id) && Object.keys(users).length == 1){ %>
+                    No Other Users
+                <% } %>
+            <% } %>
+        </div>
+    </div>
+    
+    <% include footer.ejs %>
+    
+    <script>
+     $(function(){
+        $("a").on('click',function(event){
+            var userId = $(this).attr("data-user-id");
+            $.ajax({
+                method: 'patch',
+                url: '/admin/'+ userId
+            }).done(function(response){
+                $(this).remove();
+            });            
+        });
+    });
+              
+    </script>

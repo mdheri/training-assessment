@@ -1,0 +1,21 @@
+<% if(admin){%>
+<% include headerAdmin.ejs %>
+<% } else { %>	
+<% include header.ejs %>
+<% } %>
+<div class="header">
+	<h1>Landing Page</h1>
+</div>
+
+<div class="body">
+	<div class="scrollmenu">
+			<% for(var i=0; i<Object.keys(pages).length; i++) {%>
+				<a href="<%=pages[i].url%>"><%=pages[i].title%></a>
+			<% } %>
+
+
+	</div>
+</div>
+
+
+<% include footer.ejs %>

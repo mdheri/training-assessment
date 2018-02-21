@@ -1,0 +1,243 @@
+.nav{
+  position:fixed;
+  top : 0;
+  right : 0;
+  left :0;
+  background:black;
+  padding:16px;
+  z-index: 10;
+}
+
+.nav a{
+  color:white;
+  padding: 16px;
+  text-decoration: none;
+}
+
+.nav a:hover {
+  background-color: #555;
+}
+
+
+.header{
+  position:static;
+  margin-top: 64px;
+}
+
+.bottom{
+  bottom: 0%;
+  padding:30px;
+}
+
+.footer{
+  background:black;
+  color: white;
+  position: fixed;
+  padding-left: 20px;
+  right : 0;
+  left :0;
+  bottom: 0;
+}
+
+.footer a{
+  color:white;
+  text-decoration:none;
+}
+
+.footer a:hover{
+  color:#999;
+}
+
+body{
+  background-color:#eee;
+}
+
+#modal{
+  position: fixed;
+  display: none;
+}
+
+#modal-background{
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(163, 161, 161, 0.534);
+}
+#authmodal{
+  position: fixed;
+  display: none;
+}
+
+#authmodal-background{
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(163, 161, 161, 0.534);
+}
+
+.ql-editor{
+  height: 100px;
+}
+
+[data-editable] iframe,
+[data-editable] image,
+[data-editable] [data-ce-tag=img],
+[data-editable] img,
+[data-editable] video {
+    clear: both;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 100%;
+}
+
+/* Left align */
+[data-editable] .align-left {
+    clear: initial;
+    float: left;
+    margin-right: 0.5em;
+}
+
+/* Right align */
+[data-editable].align-right {
+    clear: initial;
+    float: right;
+    margin-left: 0.5em;
+}
+
+/* Alignment styles for text in editable regions */
+[data-editable] .text-center {
+    text-align: center;
+}
+
+[data-editable] .text-left {
+    text-align: left;
+}
+
+[data-editable] .text-right {
+    text-align: right;
+}
+
+
+#add-page{
+  width:50%;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  padding: 25px;
+  border-radius: 15px;
+  border: 3px solid red;
+  background: #fff;
+  z-index: 11;
+}
+
+#add-page-btn-X{
+  position: inherit;
+  top:2%;
+  right: 2%;
+  color: red;
+  }
+
+#add-page-btn-title{
+text-align: center;
+}
+
+
+div.scrollmenu {
+  background-color: #333;
+  position: fixed;
+  width : 95%;
+  top: 125px;
+  bottom:60px;
+  left: 2.5%;
+  overflow: auto;
+  white-space: nowrap;
+}
+
+div.scrollmenu a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px;
+  text-decoration: none;
+}
+
+div.scrollmenu a:hover {
+  background-color: #777;
+}
+
+table#main, th,td{
+  border: 1px solid black;
+}
+
+
+td#options{
+  text-align: center;
+  padding: 10px;
+}
+
+td#tblmain{
+  text-align:center;
+  border:none;
+  padding-bottom:2px;
+  padding-top:2px;
+}
+
+td#tblmain:hover{
+  background-color:#ccc;
+}
+
+table {
+  width: 100%;
+}
+
+.dashboardheader{
+width : 75%;
+text-align:center;
+display:inline-block;
+
+ }
+
+.btnaddpage{
+  width : 15%;
+  display:inline-block;
+}
+
+.autherror{
+  text-align: center;
+  color: red;
+}
+
+
+.login{
+  position:fixed;
+  bottom: 65%;
+  right: 50%;
+}
+
+.registration{
+  position:fixed;
+  bottom: 35%;
+  right: 50%;
+}
+	 
+.edit{
+  position:fixed;
+  bottom: 50%;
+  right: 50%;
+}
+
+#title, #url, #content
+{
+width: 98%;
+}
+
+#content{
+height: 250px;
+}
+   

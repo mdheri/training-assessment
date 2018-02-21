@@ -1,0 +1,168 @@
+<% if(admin){%>
+<% include headerAdmin.ejs %>
+<% } else { %>	
+<% include header.ejs %>
+<% } %>
+		<div class = "header">
+					<h1><%= title %><h1>
+		</div>
+
+		<p id = 'pageid' hidden><%=id%></p>
+
+		<%if(admin){%>
+		<div data-editable data-name="content">
+					<%- content %>
+		</div>
+		
+		<script src = "/assets/content-tools.js"></script>
+		<script src = "/assets/editor.js"></script>
+		<%}else{%>
+					<%- content %>
+		<%}%>
+
+		<%if(admin){%>
+			<button id =sharebtn data-url = <%= url%> >Share</button>
+		<%}%>
+
+		<div class = bottom>
+		</div>
+		
+		<div class="footer">
+				<p>Created by <a href="mailto:<%= useremail %>"><%= useremail %></a>.</p>
+		</div>
+		<div id = "authmodal">
+			<div class="login">
+				<form>
+					<input type="email" placeholder="enter your email" id="loginemail" name="email" required><br>
+					<input type="password" placeholder="enter your password" id="loginpass" name="password" required><br>
+				</form>
+				<button class = "btn-login">Login</button>
+
+			</div>
+			
+			
+			<div class="registration">
+				<form>
+					<input type="email" placeholder="enter your email" id="regemail" name="email" required><br>
+					<input type="text" placeholder="enter your name" id="regname" name="name" required><br>
+					<input type="password" placeholder="enter a password" id="regpass" name="password" required><br>
+				</form>
+				<button class = "btn-reg">Register</button>
+
+			</div>
+		</div>
+		<div id = "modal">
+			<div class = "postmodle">
+				<div id="add-page">
+					<div id = 'add-page-btn-title'>
+						<h3>Add a Page</h3>
+					</div>
+					<div id = 'add-page-btn-X'>
+							<button class = 'btn-cancel'>X</button>
+						</div>
+					<form>
+						url: <%=url%><br>
+						
+					</form>
+					
+					<button class = "btn-post">Post</button>
+					<button class = "btn-cancel">Cancel</button>
+				</div>
+			</div>
+		</div>
+	
+  </body>
+</html>
+
+<script>
+		var url = "<%=url%>";
+		var title = "<%=title%>";
+		var user;
+		$(function(){
+		$('#sharebtn').on('click',function(event){
+			$('#authmodal').show();
+		});
+
+
+		$('#authmodal').on('click','#modal-background',function(event){
+			$('#authmodal').hide();
+		});
+
+		$('#modal').on('click','#modal-background',function(event){
+			$('#modal').hide();
+		});
+
+		$('.btn-login').on('click',function(event){
+			var logemail = document.getElementById('loginemail').value;
+			var logpass = document.getElementById('loginpass').value;
+		$.ajax({
+			type: "post",
+			url: "http://localhost:3000/auth/login/cors",
+			crossDomain: true,
+			xhrFields: {
+				withCredentials: false
+			},	
+			data: { 
+				email: logemail,
+				password: logpass
+			}
+		}).done(function(response){
+			console.log(response);
+			user = response;
+		});
+			if(user){
+			$('#authmodal').hide();
+			$('#modal').show();
+			}
+		});
+		$('.btn-reg').on('click',function(event){
+			var regpass = document.getElementById('regpass').value;
+			var regname = document.getElementById('regname').value;
+			var regemail = document.getElementById('regemail').value;
+		$.ajax({
+			type: "post",
+			url: "http://localhost:3000/auth/register",
+			crossDomain: true,
+			xhrFields: {
+				withCredentials: false
+			},	
+			data: { 
+				email: regemail,
+				username: regname,
+				password: regpass
+			}
+			}).done(function(response){
+			});
+			$('.registration').hide();
+		});
+
+
+		$('.btn-cancel').on('click',function(event){
+			$('#modal').hide();
+		});
+
+		$('.btn-post').on('click',function(event){
+			if(user){
+				id = user._id;
+				name = user.username;
+				$.ajax({
+				type: "post",
+				url: "http://localhost:3000/admin/tweet/cors",
+				crossDomain: true,
+				xhrFields: {
+					withCredentials: false
+				},	
+				data: { 
+					content: "<a href = "+ url + ">"+ title + "</a>",
+					userid: id,
+					username: name
+
+				}
+			}).done(function(response){
+			});
+		}
+			$('#modal').hide();
+		})
+	
+		});
+</script>
